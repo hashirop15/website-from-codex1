@@ -1,2189 +1,989 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-  <title>TERRA — Organic Clothing</title>
-
-  <meta
-    name="description"
-    content="Undyed cotton, washed linen and baggy pants. Cut in small runs, finished by hand."
-  >
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
-    rel="stylesheet"
-  >
-
-  <style>
-
-    :root {
-      --bg: #F3EFE6;
-      --bg-warm: #EDE6D6;
-      --bg-dark: #1A1814;
-      --text: #2C2820;
-      --text-light: #8A8070;
-      --accent: #B8956A;
-      --border: rgba(44,40,32,0.1);
-
-      --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      --ease-slow: cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-
-      overflow-x: hidden;
-    }
-
-
-    ::selection {
-      background: var(--accent);
-      color: #fff;
-    }
-
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-
-    .font-serif {
-      font-family: 'Cormorant Garamond', 'Georgia', serif;
-      font-weight: 400;
-      line-height: 1.05;
-    }
-
-
-    /* ==========================================
-       NAVIGATION
-    ========================================== */
-
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-
-      width: 100%;
-
-      z-index: 1000;
-
-      padding: 1.75rem 3rem;
-
-      transition: all 0.5s var(--ease-slow);
-
-      mix-blend-mode: difference;
-    }
-
-
-    .nav.scrolled {
-      background: rgba(243, 239, 230, 0.95);
-
-      backdrop-filter: blur(20px) saturate(1.2);
-      -webkit-backdrop-filter: blur(20px) saturate(1.2);
-
-      mix-blend-mode: normal;
-
-      border-bottom: 1px solid var(--border);
-
-      padding: 1.1rem 3rem;
-    }
-
-
-    .nav__inner {
-      display: flex;
-
-      align-items: center;
-      justify-content: space-between;
-
-      max-width: 1600px;
-
-      margin: 0 auto;
-    }
-
-
-    .nav__logo {
-      font-family: 'Cormorant Garamond', serif;
-
-      font-size: 1.6rem;
-
-      font-weight: 500;
-
-      letter-spacing: 0.1em;
-
-      text-transform: uppercase;
-
-      color: #fff;
-
-      cursor: pointer;
-    }
-
-
-    .nav.scrolled .nav__logo {
-      color: var(--text);
-    }
-
-
-    .nav__links {
-      display: flex;
-
-      gap: 2.5rem;
-
-      list-style: none;
-    }
-
-
-    .nav__links a {
-      font-size: 12px;
-
-      text-transform: uppercase;
-
-      letter-spacing: 0.14em;
-
-      color: #fff;
-
-      position: relative;
-
-      padding-bottom: 3px;
-
-      cursor: pointer;
-    }
-
-
-    .nav.scrolled .nav__links a {
-      color: var(--text);
-    }
-
-
-    .nav__links a::after {
-      content: '';
-
-      position: absolute;
-
-      bottom: 0;
-      left: 0;
-
-      width: 0%;
-
-      height: 1px;
-
-      background: currentColor;
-
-      transition: width 0.5s var(--ease-out);
-    }
-
-
-    .nav__links a:hover::after {
-      width: 100%;
-    }
-
-
-    .nav__icon {
-      background: none;
-
-      border: none;
-
-      cursor: pointer;
-
-      padding: 0.5rem;
-
-      color: #fff;
-    }
-
-
-    .nav.scrolled .nav__icon {
-      color: var(--text);
-    }
-
-
-    .mobile-menu-btn {
-      display: none;
-
-      background: none;
-
-      border: none;
-
-      cursor: pointer;
-
-      color: #fff;
-
-      padding: 0.5rem;
-    }
-
-
-    .nav.scrolled .mobile-menu-btn {
-      color: var(--text);
-    }
-
-
-    /* ==========================================
-       MOBILE MENU
-    ========================================== */
-
-    .mobile-nav {
-      position: fixed;
-
-      inset: 0;
-
-      background: var(--bg);
-
-      z-index: 999;
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-
-      justify-content: center;
-
-      gap: 2.5rem;
-
-      opacity: 0;
-
-      pointer-events: none;
-
-      transition: opacity 0.5s var(--ease-slow);
-    }
-
-
-    .mobile-nav.open {
-      opacity: 1;
-
-      pointer-events: all;
-    }
-
-
-    .mobile-nav a {
-      font-family: 'Cormorant Garamond', serif;
-
-      font-size: 2.5rem;
-
-      color: var(--text);
-
-      opacity: 0;
-
-      transform: translateY(20px);
-
-      transition: all 0.6s var(--ease-slow);
-
-      cursor: pointer;
-    }
-
-
-    .mobile-nav.open a {
-      opacity: 1;
-
-      transform: translateY(0);
-    }
-
-
-    .mobile-nav.open a:nth-child(1) {
-      transition-delay: 0.1s;
-    }
-
-
-    .mobile-nav.open a:nth-child(2) {
-      transition-delay: 0.2s;
-    }
-
-
-    .mobile-nav.open a:nth-child(3) {
-      transition-delay: 0.3s;
-    }
-
-
-    .mobile-nav.open a:nth-child(4) {
-      transition-delay: 0.4s;
-    }
-
-
-    .mobile-nav__close {
-      position: absolute;
-
-      top: 1.5rem;
-      right: 1.5rem;
-
-      background: none;
-
-      border: none;
-
-      cursor: pointer;
-
-      color: var(--text);
-
-      padding: 0.5rem;
-    }
-
-
-    /* ==========================================
-       HERO SLIDER
-    ========================================== */
-
-    .hero-slider {
-      position: relative;
-
-      height: 100vh;
-
-      min-height: 700px;
-
-      width: 100%;
-
-      overflow: hidden;
-    }
-
-
-    .hero-slider__track {
-      display: flex;
-
-      height: 100%;
-
-      transition: transform 0.8s var(--ease-slow);
-    }
-
-
-    .hero-slide {
-      position: relative;
-
-      min-width: 100%;
-
-      height: 100%;
-
-      display: flex;
-
-      align-items: flex-end;
-
-      justify-content: center;
-    }
-
-
-    .hero-slide__media {
-      position: absolute;
-
-      inset: 0;
-
-      z-index: 0;
-    }
-
-
-    .hero-slide__media img {
-      width: 100%;
-
-      height: 100%;
-
-      object-fit: cover;
-    }
-
-
-    .hero-slide__overlay {
-      position: absolute;
-
-      inset: 0;
-
-      background:
-        linear-gradient(
-          to bottom,
-          rgba(0,0,0,0.2) 0%,
-          rgba(0,0,0,0.5) 60%,
-          rgba(0,0,0,0.75) 100%
-        );
-
-      z-index: 1;
-    }
-
-
-    .hero-slide__content {
-      position: relative;
-
-      z-index: 2;
-
-      text-align: center;
-
-      color: #fff;
-
-      padding: 5rem 2rem 7rem;
-
-      max-width: 700px;
-    }
-
-
-    .hero-slide__badge {
-      display: inline-block;
-
-      font-size: 11px;
-
-      text-transform: uppercase;
-
-      letter-spacing: 0.2em;
-
-      border: 1px solid rgba(255,255,255,0.4);
-
-      padding: 0.5rem 1.2rem;
-
-      border-radius: 100px;
-
-      margin-bottom: 1.5rem;
-    }
-
-
-    .hero-slide__title {
-      font-size: clamp(2.5rem, 6vw, 5rem);
-
-      margin-bottom: 1rem;
-
-      letter-spacing: -0.01em;
-    }
-
-
-    .hero-slide__title em {
-      font-style: italic;
-
-      font-weight: 400;
-    }
-
-
-    .hero-slide__price {
-      font-size: 18px;
-
-      opacity: 0.8;
-
-      margin-bottom: 2rem;
-
-      font-weight: 300;
-    }
-
-
-    .hero-slide__cta {
-      display: inline-flex;
-
-      align-items: center;
-
-      gap: 0.75rem;
-
-      background: #fff;
-
-      color: var(--text);
-
-      font-size: 12px;
-
-      text-transform: uppercase;
-
-      letter-spacing: 0.12em;
-
-      padding: 1rem 2.5rem;
-
-      border-radius: 100px;
-
-      transition: all 0.4s var(--ease-out);
-
-      border: none;
-
-      cursor: pointer;
-
-      font-family: 'Inter', sans-serif;
-    }
-
-
-    .hero-slide__cta:hover {
-      background: var(--accent);
-
-      color: #fff;
-
-      gap: 1rem;
-    }
-
-
-    .slider-dots {
-      position: absolute;
-
-      bottom: 2.5rem;
-
-      left: 50%;
-
-      transform: translateX(-50%);
-
-      z-index: 10;
-
-      display: flex;
-
-      gap: 0.75rem;
-    }
-
-
-    .slider-dot {
-      width: 10px;
-
-      height: 10px;
-
-      border-radius: 50%;
-
-      background: rgba(255,255,255,0.3);
-
-      border: none;
-
-      cursor: pointer;
-
-      transition: all 0.4s;
-
-      padding: 0;
-    }
-
-
-    .slider-dot.active {
-      background: #fff;
-
-      transform: scale(1.2);
-    }
-
-
-    .slider-arrows {
-      position: absolute;
-
-      top: 50%;
-
-      transform: translateY(-50%);
-
-      width: 100%;
-
-      z-index: 10;
-
-      display: flex;
-
-      justify-content: space-between;
-
-      padding: 0 2rem;
-
-      pointer-events: none;
-    }
-
-
-    .slider-arrow {
-      width: 48px;
-
-      height: 48px;
-
-      border-radius: 50%;
-
-      background: rgba(255,255,255,0.1);
-
-      backdrop-filter: blur(10px);
-
-      border: 1px solid rgba(255,255,255,0.2);
-
-      color: #fff;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      cursor: pointer;
-
-      transition: all 0.3s;
-
-      pointer-events: all;
-    }
-
-
-    .slider-arrow:hover {
-      background: rgba(255,255,255,0.25);
-    }
-
-
-    /* ==========================================
-       MARQUEE
-    ========================================== */
-
-    .marquee {
-      background: var(--bg-warm);
-
-      padding: 1.1rem 0;
-
-      overflow: hidden;
-
-      white-space: nowrap;
-
-      border-top: 1px solid var(--border);
-
-      border-bottom: 1px solid var(--border);
-    }
-
-
-    .marquee__track {
-      display: inline-block;
-
-      animation: marqueeScroll 25s linear infinite;
-    }
-
-
-    .marquee__item {
-      display: inline-flex;
-
-      align-items: center;
-
-      gap: 0.5rem;
-
-      font-size: 11px;
-
-      text-transform: uppercase;
-
-      letter-spacing: 0.18em;
-
-      padding: 0 2.5rem;
-
-      color: var(--text-light);
-    }
-
-
-    .marquee__dot {
-      width: 5px;
-
-      height: 5px;
-
-      background: var(--accent);
-
-      border-radius: 50%;
-
-      display: inline-block;
-    }
-
-
-    @keyframes marqueeScroll {
-
-      0% {
-        transform: translateX(0);
-      }
-
-      100% {
-        transform: translateX(-50%);
-      }
-
-    }
-
-
-    /* ==========================================
-       BESTSELLERS
-    ========================================== */
-
-    .bestsellers {
-      max-width: 1400px;
-
-      margin: 0 auto;
-
-      padding: 8rem 3rem;
-    }
-
-
-    .bestsellers__head {
-      text-align: center;
-
-      margin-bottom: 4rem;
-    }
-
-
-    .bestsellers__label {
-      font-size: 11px;
-
-      text-transform: uppercase;
-
-      letter-spacing: 0.2em;
-
-      color: var(--text-light);
-
-      margin-bottom: 1rem;
-
-      display: block;
-    }
-
-
-    .bestsellers__title {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-    }
-
-
-    .bestsellers__title em {
-      font-style: italic;
-    }
-
-
-    .product-grid {
-      display: grid;
-
-      grid-template-columns: repeat(4, 1fr);
-
-      gap: 2.5rem 2rem;
-    }
-
-
-    .product-card {
-      cursor: pointer;
-    }
-
-
-    .product-card__visual {
-      position: relative;
-
-      aspect-ratio: 3 / 4;
-
-      overflow: hidden;
-
-      background: var(--bg-warm);
-
-      margin-bottom: 1.25rem;
-    }
-
-
-    .product-card__visual img {
-      width: 100%;
-
-      height: 100%;
-
-      object-fit: cover;
-
-      transition: transform 1.2s var(--ease-slow);
-    }
-
-
-    .product-card:hover .product-card__visual img {
-      transform: scale(1.06);
-    }
-
-
-    .product-card__badge {
-      position: absolute;
-
-      top: 1rem;
-
-      left: 1rem;
-
-      font-size: 10px;
-
-      text-transform: uppercase;
-
-      letter-spacing: 0.12em;
-
-      background: rgba(255,255,255,0.92);
-
-      color: var(--text);
-
-      padding: 0.4rem 0.9rem;
-
-      border-radius: 100px;
-
-      backdrop-filter: blur(8px);
-
-      font-weight: 500;
-    }
-
-
-    .product-card__quick {
-      position: absolute;
-
-      bottom: 1rem;
-
-      left: 50%;
-
-      transform:
-        translateX(-50%)
-        translateY(10px);
-
-      opacity: 0;
-
-      background: #fff;
-
-      color: var(--text);
-
-      border: none;
-
-      padding: 0.75rem 2rem;
-
-      font-size: 11px;
-
-      text-transform: uppercase;
-
-      letter-spacing: 0.12em;
-
-      cursor: pointer;
-
-      border-radius: 100px;
-
-      transition: all 0.4s var(--ease-out);
-
-      font-family: 'Inter', sans-serif;
-
-      white-space: nowrap;
-    }
-
-
-    .product-card:hover .product-card__quick {
-      opacity: 1;
-
-      transform:
-        translateX(-50%)
-        translateY(0);
-    }
-
-
-    .product-card__info {
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: baseline;
-
-      gap: 1rem;
-    }
-
-
-    .product-card__name {
-      font-size: 14px;
-
-      font-weight: 400;
-
-      color: var(--text);
-
-      letter-spacing: 0.01em;
-
-      line-height: 1.4;
-    }
-
-
-    .product-card__price {
-      font-size: 13px;
-
-      color: var(--text-light);
-
-      font-weight: 400;
-
-      white-space: nowrap;
-    }
-
-
-    .product-card__meta {
-      font-size: 12px;
-
-      color: var(--text-light);
-
-      margin-top: 0.35rem;
-
-      letter-spacing: 0.02em;
-    }
-
-
-    /* ==========================================
-       FOOTER
-    ========================================== */
-
-    .footer {
-      padding: 4rem 3rem;
-
-      border-top: 1px solid var(--border);
-
-      background: var(--bg);
-    }
-
-
-    .footer__inner {
-      max-width: 1600px;
-
-      margin: 0 auto;
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      flex-wrap: wrap;
-
-      gap: 2rem;
-    }
-
-
-    .footer__logo {
-      font-family: 'Cormorant Garamond', serif;
-
-      font-size: 1.4rem;
-
-      letter-spacing: 0.08em;
-
-      text-transform: uppercase;
-    }
-
-
-    .footer__links {
-      display: flex;
-
-      gap: 2.5rem;
-
-      list-style: none;
-    }
-
-
-    .footer__links a {
-      font-size: 12px;
-
-      text-transform: uppercase;
-
-      letter-spacing: 0.1em;
-
-      color: var(--text-light);
-
-      transition: color 0.3s;
-    }
-
-
-    .footer__links a:hover {
-      color: var(--text);
-    }
-
-
-    .footer__copy {
-      font-size: 12px;
-
-      color: var(--text-light);
-    }
-
-
-    /* ==========================================
-       SCROLL REVEAL
-    ========================================== */
-
-    .reveal {
-      opacity: 0;
-
-      transform: translateY(30px);
-
-      transition:
-        opacity 0.8s var(--ease-slow),
-        transform 0.8s var(--ease-slow);
-    }
-
-
-    .reveal.visible {
-      opacity: 1;
-
-      transform: translateY(0);
-    }
-
-
-    /* ==========================================
-       MOBILE
-    ========================================== */
-
-    @media (max-width: 1200px) {
-
-      .product-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-    }
-
-
-    @media (max-width: 1024px) {
-
-      .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-
-        gap: 2rem 1.5rem;
-      }
-
-
-      .bestsellers {
-        padding: 6rem 2rem;
-      }
-
-    }
-
-
-    @media (max-width: 768px) {
-
-      .nav {
-        padding: 1.1rem 1.25rem;
-      }
-
-
-      .nav.scrolled {
-        padding: 0.9rem 1.25rem;
-      }
-
-
-      .nav__links {
-        display: none;
-      }
-
-
-      .mobile-menu-btn {
-        display: block;
-      }
-
-
-      .hero-slider {
-        min-height: 600px;
-      }
-
-
-      .hero-slide__title {
-        font-size: clamp(2rem, 10vw, 3rem);
-      }
-
-
-      .hero-slide__content {
-        padding: 4rem 1.5rem 6rem;
-      }
-
-
-      .slider-arrows {
-        display: none;
-      }
-
-
-      .bestsellers {
-        padding: 5rem 1.25rem;
-      }
-
-
-      .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-
-        gap: 1.25rem 0.875rem;
-      }
-
-
-      .product-card__visual {
-        margin-bottom: 0.875rem;
-      }
-
-
-      .product-card__badge {
-        top: 0.625rem;
-
-        left: 0.625rem;
-
-        font-size: 9px;
-
-        padding: 0.3rem 0.7rem;
-      }
-
-
-      .product-card__quick {
-        display: none;
-      }
-
-
-      .product-card__name {
-        font-size: 13px;
-      }
-
-
-      .product-card__price {
-        font-size: 12px;
-      }
-
-
-      .product-card__meta {
-        font-size: 11px;
-
-        margin-top: 0.2rem;
-      }
-
-
-      .footer {
-        padding: 3rem 1.25rem;
-      }
-
-
-      .footer__inner {
-        flex-direction: column;
-
-        text-align: center;
-
-        gap: 1.5rem;
-      }
-
-
-      .footer__links {
-        gap: 1.25rem;
-
-        flex-wrap: wrap;
-
-        justify-content: center;
-      }
-
-    }
-
-
-    @media (max-width: 380px) {
-
-      .product-grid {
-        gap: 1rem 0.625rem;
-      }
-
-    }
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TERRA — Organic Clothing</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--bg:#F3EFE6;
+--bg-warm:#EDE6D6;
+--text:#2C2820;
+--text-light:#8A8070;
+--accent:#B8956A;
+--border:rgba(44,40,32,.1);
+--ease:cubic-bezier(.16,1,.3,1);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+img{
+width:100%;
+display:block;
+}
+
+.font-serif{
+font-family:'Cormorant Garamond',serif;
+}
+
+.nav{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+z-index:1000;
+padding:1.7rem 3rem;
+transition:.5s var(--ease);
+mix-blend-mode:difference;
+}
+
+.nav.scrolled{
+background:rgba(243,239,230,.95);
+backdrop-filter:blur(20px);
+mix-blend-mode:normal;
+border-bottom:1px solid var(--border);
+padding:1rem 3rem;
+}
+
+.nav__inner{
+max-width:1600px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.nav__logo{
+font-family:'Cormorant Garamond',serif;
+font-size:1.6rem;
+letter-spacing:.1em;
+color:white;
+}
+
+.nav.scrolled .nav__logo{
+color:var(--text);
+}
+
+.nav__links{
+display:flex;
+gap:2.5rem;
+list-style:none;
+}
+
+.nav__links a{
+font-size:12px;
+text-transform:uppercase;
+letter-spacing:.14em;
+color:white;
+position:relative;
+padding-bottom:4px;
+}
+
+.nav.scrolled .nav__links a{
+color:var(--text);
+}
+
+.nav__links a:after{
+content:"";
+position:absolute;
+left:0;
+bottom:0;
+width:0;
+height:1px;
+background:currentColor;
+transition:.4s;
+}
+
+.nav__links a:hover:after{
+width:100%;
+}
+
+.mobile-menu-btn{
+display:none;
+background:none;
+border:0;
+color:white;
+cursor:pointer;
+}
+
+.nav.scrolled .mobile-menu-btn{
+color:var(--text);
+}
+
+.mobile-nav{
+position:fixed;
+inset:0;
+background:var(--bg);
+z-index:999;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:2rem;
+opacity:0;
+pointer-events:none;
+transition:.5s;
+}
+
+.mobile-nav.open{
+opacity:1;
+pointer-events:auto;
+}
+
+.mobile-nav a{
+font-family:'Cormorant Garamond',serif;
+font-size:2.5rem;
+}
+
+.mobile-nav button{
+position:absolute;
+top:1.5rem;
+right:1.5rem;
+border:0;
+background:none;
+font-size:28px;
+}
+
+.hero{
+height:100vh;
+min-height:650px;
+position:relative;
+overflow:hidden;
+}
+
+.hero-track{
+height:100%;
+display:flex;
+transition:.8s var(--ease);
+}
+
+.slide{
+min-width:100%;
+height:100%;
+position:relative;
+display:flex;
+align-items:flex-end;
+justify-content:center;
+}
+
+.slide img{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.slide:after{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(to bottom,rgba(0,0,0,.2),rgba(0,0,0,.75));
+}
+
+.slide-content{
+position:relative;
+z-index:2;
+color:white;
+text-align:center;
+padding:5rem 2rem 7rem;
+}
+
+.badge{
+display:inline-block;
+border:1px solid rgba(255,255,255,.4);
+border-radius:100px;
+padding:.5rem 1.2rem;
+font-size:11px;
+text-transform:uppercase;
+letter-spacing:.2em;
+margin-bottom:1.5rem;
+}
+
+.slide h1{
+font-size:clamp(2.5rem,6vw,5rem);
+margin-bottom:1rem;
+}
+
+.slide h1 em{
+font-style:italic;
+}
+
+.price{
+font-size:17px;
+opacity:.85;
+margin-bottom:2rem;
+}
+
+.btn{
+display:inline-flex;
+background:white;
+color:var(--text);
+padding:1rem 2.5rem;
+border-radius:100px;
+font-size:12px;
+text-transform:uppercase;
+letter-spacing:.12em;
+transition:.4s;
+}
+
+.btn:hover{
+background:var(--accent);
+color:white;
+}
+
+.arrows{
+position:absolute;
+z-index:5;
+top:50%;
+left:0;
+right:0;
+display:flex;
+justify-content:space-between;
+padding:0 2rem;
+}
+
+.arrow{
+width:48px;
+height:48px;
+border-radius:50%;
+border:1px solid rgba(255,255,255,.3);
+background:rgba(255,255,255,.1);
+color:white;
+cursor:pointer;
+font-size:20px;
+}
+
+.dots{
+position:absolute;
+z-index:5;
+bottom:2.5rem;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:.7rem;
+}
+
+.dot{
+width:9px;
+height:9px;
+border-radius:50%;
+border:0;
+background:rgba(255,255,255,.35);
+cursor:pointer;
+}
+
+.dot.active{
+background:white;
+transform:scale(1.2);
+}
+
+.marquee{
+background:var(--bg-warm);
+padding:1rem 0;
+overflow:hidden;
+white-space:nowrap;
+border-top:1px solid var(--border);
+border-bottom:1px solid var(--border);
+}
+
+.marquee-track{
+display:inline-block;
+animation:marquee 25s linear infinite;
+}
+
+.marquee span{
+display:inline-flex;
+align-items:center;
+gap:.6rem;
+padding:0 2.5rem;
+font-size:11px;
+text-transform:uppercase;
+letter-spacing:.18em;
+color:var(--text-light);
+}
+
+.marquee i{
+width:5px;
+height:5px;
+background:var(--accent);
+border-radius:50%;
+}
+
+@keyframes marquee{
+from{transform:translateX(0)}
+to{transform:translateX(-50%)}
+}
+
+.section{
+max-width:1400px;
+margin:auto;
+padding:8rem 3rem;
+}
+
+.section-head{
+text-align:center;
+margin-bottom:4rem;
+}
+
+.section-label{
+font-size:11px;
+text-transform:uppercase;
+letter-spacing:.2em;
+color:var(--text-light);
+display:block;
+margin-bottom:1rem;
+}
+
+.section-title{
+font-size:clamp(2.2rem,4vw,3.4rem);
+}
+
+.section-title em{
+font-style:italic;
+}
+
+.product-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:2rem;
+}
+
+.card{
+cursor:pointer;
+}
+
+.card-image{
+aspect-ratio:3/4;
+overflow:hidden;
+background:var(--bg-warm);
+position:relative;
+margin-bottom:1.2rem;
+}
+
+.card-image img{
+height:100%;
+object-fit:cover;
+transition:1s var(--ease);
+}
+
+.card:hover img{
+transform:scale(1.06);
+}
+
+.card-badge{
+position:absolute;
+top:1rem;
+left:1rem;
+background:white;
+padding:.4rem .8rem;
+border-radius:50px;
+font-size:10px;
+text-transform:uppercase;
+letter-spacing:.1em;
+}
+
+.card-info{
+display:flex;
+justify-content:space-between;
+gap:1rem;
+}
+
+.card-name{
+font-size:14px;
+}
+
+.card-meta{
+font-size:12px;
+color:var(--text-light);
+margin-top:.3rem;
+}
+
+.card-price{
+font-size:13px;
+color:var(--text-light);
+}
+
+.view-shop{
+text-align:center;
+margin-top:4rem;
+}
+
+.view-shop a{
+display:inline-block;
+border:1px solid var(--text);
+padding:1rem 2.5rem;
+border-radius:100px;
+font-size:11px;
+text-transform:uppercase;
+letter-spacing:.15em;
+transition:.3s;
+}
+
+.view-shop a:hover{
+background:var(--text);
+color:white;
+}
+
+/* CONTACT HOME */
+
+.contact-home{
+background:var(--bg-warm);
+padding:7rem 3rem;
+}
+
+.contact-inner{
+max-width:1200px;
+margin:auto;
+text-align:center;
+}
+
+.contact-inner h2{
+font-size:clamp(2.5rem,5vw,4rem);
+margin-bottom:1rem;
+}
+
+.contact-inner p{
+max-width:600px;
+margin:0 auto 3rem;
+color:var(--text-light);
+line-height:1.8;
+}
+
+.contact-details{
+display:flex;
+justify-content:center;
+gap:5rem;
+flex-wrap:wrap;
+}
+
+.contact-detail span{
+display:block;
+font-size:10px;
+text-transform:uppercase;
+letter-spacing:.18em;
+color:var(--text-light);
+margin-bottom:.5rem;
+}
+
+.contact-detail a{
+font-size:15px;
+}
+
+.footer{
+padding:4rem 3rem;
+border-top:1px solid var(--border);
+}
+
+.footer-inner{
+max-width:1600px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:2rem;
+flex-wrap:wrap;
+}
+
+.footer-logo{
+font-family:'Cormorant Garamond',serif;
+font-size:1.4rem;
+letter-spacing:.08em;
+}
+
+.footer-links{
+display:flex;
+gap:2rem;
+list-style:none;
+}
+
+.footer-links a{
+font-size:11px;
+text-transform:uppercase;
+letter-spacing:.1em;
+color:var(--text-light);
+}
+
+.footer-copy{
+font-size:11px;
+color:var(--text-light);
+}
+
+@media(max-width:1100px){
+.product-grid{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:768px){
+
+.nav{
+padding:1.1rem 1.25rem;
+}
+
+.nav.scrolled{
+padding:.9rem 1.25rem;
+}
+
+.nav__links{
+display:none;
+}
+
+.mobile-menu-btn{
+display:block;
+}
+
+.arrows{
+display:none;
+}
+
+.section{
+padding:5rem 1.25rem;
+}
+
+.product-grid{
+grid-template-columns:repeat(2,1fr);
+gap:1.2rem .8rem;
+}
+
+.contact-home{
+padding:5rem 1.25rem;
+}
+
+.contact-details{
+gap:2rem;
+}
+
+.footer{
+padding:3rem 1.25rem;
+}
+
+.footer-inner{
+flex-direction:column;
+text-align:center;
+}
+
+.footer-links{
+flex-wrap:wrap;
+justify-content:center;
+}
+}
+</style>
 </head>
-
 
 <body>
 
+<!-- MOBILE MENU -->
+
+<div class="mobile-nav" id="mobileNav">
+<button onclick="toggleMenu()">×</button>
+<a href="index.html">Home</a>
+<a href="#bestsellers">Bestsellers</a>
+<a href="shop.html">Shop</a>
+<a href="contact.html">Contact</a>
+</div>
 
-  <!-- ==========================================
-       MOBILE NAV
-  ========================================== -->
+<!-- NAVIGATION -->
 
-  <div
-    class="mobile-nav"
-    id="mobileNav"
-  >
+<nav class="nav" id="navbar">
+<div class="nav__inner">
 
-    <button
-      class="mobile-nav__close"
-      onclick="toggleMenu()"
-      aria-label="Close"
-    >
+<button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
 
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-      >
+<a href="index.html" class="nav__logo">TERRA</a>
 
-        <path d="M18 6L6 18M6 6l12 12"/>
-
-      </svg>
-
-    </button>
-
-
-    <a href="index.html">
-      Home
-    </a>
-
-
-    <a href="index.html#bestsellers">
-      Bestsellers
-    </a>
-
-
-    <a href="shop.html">
-      Shop
-    </a>
-
-
-    <a href="index.html#footer">
-      Contact
-    </a>
-
-  </div>
-
-
-  <!-- ==========================================
-       NAVIGATION
-  ========================================== -->
-
-  <nav
-    class="nav"
-    id="navbar"
-  >
-
-    <div class="nav__inner">
-
-
-      <button
-        class="mobile-menu-btn"
-        onclick="toggleMenu()"
-        aria-label="Menu"
-      >
-
-        <svg
-          width="22"
-          height="22"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-        >
-
-          <path d="M3 12h18M3 6h18M3 18h18"/>
-
-        </svg>
-
-      </button>
-
-
-      <a
-        href="index.html"
-        class="nav__logo"
-      >
-        TERRA
-      </a>
-
-
-      <ul class="nav__links">
-
-        <li>
-          <a href="index.html">
-            Home
-          </a>
-        </li>
-
-        <li>
-          <a href="index.html#bestsellers">
-            Bestsellers
-          </a>
-        </li>
-
-        <li>
-          <a href="shop.html">
-            Shop
-          </a>
-        </li>
-
-        <li>
-          <a href="index.html#footer">
-            Contact
-          </a>
-        </li>
-
-      </ul>
-
-
-      <a
-        href="#"
-        class="nav__icon"
-        aria-label="Cart"
-      >
-
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-        >
-
-          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-
-          <line
-            x1="3"
-            y1="6"
-            x2="21"
-            y2="6"
-          />
-
-          <path d="M16 10a4 4 0 01-8 0"/>
-
-        </svg>
-
-      </a>
-
-    </div>
-
-  </nav>
-
-
-  <!-- ==========================================
-       HERO SLIDER
-  ========================================== -->
-
-  <section
-    class="hero-slider"
-    id="home"
-  >
-
-    <div
-      class="hero-slider__track"
-      id="sliderTrack"
-    >
-
-
-      <!-- SLIDE 1 -->
-
-      <div class="hero-slide">
-
-        <div class="hero-slide__media">
-
-          <img
-            src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1600&q=80"
-            alt="Organic Cotton Tee"
-          >
-
-        </div>
-
-
-        <div class="hero-slide__overlay"></div>
-
-
-        <div class="hero-slide__content">
-
-          <span class="hero-slide__badge">
-            Bestseller
-          </span>
-
-
-          <h1 class="hero-slide__title font-serif">
-
-            Organic Cotton
-            <em>Tee</em>
-
-          </h1>
-
-
-          <p class="hero-slide__price">
-            $85.00 &mdash; Undyed / 240gsm
-          </p>
-
-
-          <a
-            class="hero-slide__cta"
-            href="shop.html"
-          >
-
-            Shop Now
-
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-
-              <path d="M3.333 8h9.334m-4-4 4 4-4 4"/>
-
-            </svg>
-
-          </a>
-
-        </div>
-
-      </div>
-
-
-      <!-- SLIDE 2 -->
-
-      <div class="hero-slide">
-
-        <div class="hero-slide__media">
-
-          <img
-            src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=1600&q=80"
-            alt="Wide-Leg Linen Trouser"
-          >
-
-        </div>
-
-
-        <div class="hero-slide__overlay"></div>
-
-
-        <div class="hero-slide__content">
-
-          <span class="hero-slide__badge">
-            New Drop
-          </span>
-
-
-          <h1 class="hero-slide__title font-serif">
-
-            Wide-Leg
-            <em>Trouser</em>
-
-          </h1>
-
-
-          <p class="hero-slide__price">
-            $165.00 &mdash; Sand / Relaxed fit
-          </p>
-
-
-          <a
-            class="hero-slide__cta"
-            href="shop.html"
-          >
-
-            Shop Now
-
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-
-              <path d="M3.333 8h9.334m-4-4 4 4-4 4"/>
-
-            </svg>
-
-          </a>
-
-        </div>
-
-      </div>
-
-
-      <!-- SLIDE 3 -->
-
-      <div class="hero-slide">
-
-        <div class="hero-slide__media">
-
-          <img
-            src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=1600&q=80"
-            alt="Heavyweight Box Tee"
-          >
-
-        </div>
-
-
-        <div class="hero-slide__overlay"></div>
-
-
-        <div class="hero-slide__content">
-
-          <span class="hero-slide__badge">
-            Most Loved
-          </span>
-
-
-          <h1 class="hero-slide__title font-serif">
-
-            Heavyweight
-            <em>Box Tee</em>
-
-          </h1>
-
-
-          <p class="hero-slide__price">
-            $95.00 &mdash; Washed Black / 300gsm
-          </p>
-
-
-          <a
-            class="hero-slide__cta"
-            href="shop.html"
-          >
-
-            Shop Now
-
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-
-              <path d="M3.333 8h9.334m-4-4 4 4-4 4"/>
-
-            </svg>
-
-          </a>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- ARROWS -->
-
-    <div class="slider-arrows">
-
-      <button
-        class="slider-arrow"
-        onclick="prevSlide()"
-        aria-label="Previous"
-      >
-
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-
-          <path d="M15 18l-6-6 6-6"/>
-
-        </svg>
-
-      </button>
-
-
-      <button
-        class="slider-arrow"
-        onclick="nextSlide()"
-        aria-label="Next"
-      >
-
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-
-          <path d="M9 18l6-6-6-6"/>
-
-        </svg>
-
-      </button>
-
-    </div>
-
-
-    <!-- DOTS -->
-
-    <div class="slider-dots">
-
-      <button
-        class="slider-dot active"
-        onclick="goToSlide(0)"
-        aria-label="Slide 1"
-      ></button>
-
-
-      <button
-        class="slider-dot"
-        onclick="goToSlide(1)"
-        aria-label="Slide 2"
-      ></button>
-
-
-      <button
-        class="slider-dot"
-        onclick="goToSlide(2)"
-        aria-label="Slide 3"
-      ></button>
-
-    </div>
-
-  </section>
-
-
-  <!-- ==========================================
-       MARQUEE
-  ========================================== -->
-
-  <div class="marquee">
-
-    <div class="marquee__track">
-
-      <span class="marquee__item">
-        <span class="marquee__dot"></span>
-        Organic cotton
-      </span>
-
-      <span class="marquee__item">
-        <span class="marquee__dot"></span>
-        Small batch
-      </span>
-
-      <span class="marquee__item">
-        <span class="marquee__dot"></span>
-        Undyed fibres
-      </span>
-
-      <span class="marquee__item">
-        <span class="marquee__dot"></span>
-        Made in Portugal
-      </span>
-
-      <span class="marquee__item">
-        <span class="marquee__dot"></span>
-        Free shipping over $150
-      </span>
-
-
-      <span class="marquee__item">
-        <span class="marquee__dot"></span>
-        Organic cotton
-      </span>
-
-      <span class="marquee__item">
-        <span class="marquee__dot"></span>
-        Small batch
-      </span>
-
-      <span class="marquee__item">
-        <span class="marquee__dot"></span>
-        Undyed fibres
-      </span>
-
-      <span class="marquee__item">
-        <span class="marquee__dot"></span>
-        Made in Portugal
-      </span>
-
-      <span class="marquee__item">
-        <span class="marquee__dot"></span>
-        Free shipping over $150
-      </span>
-
-    </div>
-
-  </div>
-
-
-  <!-- ==========================================
-       BESTSELLERS
-       T-SHIRTS AND BAGGY PANTS
-       REMOVED FROM HOME
-  ========================================== -->
-
-  <section
-    class="bestsellers"
-    id="bestsellers"
-  >
-
-    <div class="bestsellers__head reveal">
-
-      <span class="bestsellers__label">
-        Curated
-      </span>
-
-
-      <h2 class="bestsellers__title font-serif">
-
-        This Week&rsquo;s
-        <em>Favourites</em>
-
-      </h2>
-
-    </div>
-
-
-    <div class="product-grid">
-
-
-      <!-- PRODUCT 1 -->
-
-      <div class="product-card reveal">
-
-        <div class="product-card__visual">
-
-          <img
-            src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=80"
-            alt="Organic Cotton Tee"
-          >
-
-          <span class="product-card__badge">
-            Bestseller
-          </span>
-
-          <button class="product-card__quick">
-            Quick Add
-          </button>
-
-        </div>
-
-
-        <div class="product-card__info">
-
-          <div>
-
-            <div class="product-card__name">
-              Organic Cotton Tee
-            </div>
-
-            <div class="product-card__meta">
-              Undyed / 240gsm
-            </div>
-
-          </div>
-
-
-          <div class="product-card__price">
-            $85.00
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- PRODUCT 2 -->
-
-      <div class="product-card reveal">
-
-        <div class="product-card__visual">
-
-          <img
-            src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=700&q=80"
-            alt="Heavyweight Box Tee"
-          >
-
-          <span class="product-card__badge">
-            Top Rated
-          </span>
-
-          <button class="product-card__quick">
-            Quick Add
-          </button>
-
-        </div>
-
-
-        <div class="product-card__info">
-
-          <div>
-
-            <div class="product-card__name">
-              Heavyweight Box Tee
-            </div>
-
-            <div class="product-card__meta">
-              Washed Black / 300gsm
-            </div>
-
-          </div>
-
-
-          <div class="product-card__price">
-            $95.00
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- PRODUCT 3 -->
-
-      <div class="product-card reveal">
-
-        <div class="product-card__visual">
-
-          <img
-            src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=700&q=80"
-            alt="Wide-Leg Linen Trouser"
-          >
-
-          <span class="product-card__badge">
-            New
-          </span>
-
-          <button class="product-card__quick">
-            Quick Add
-          </button>
-
-        </div>
-
-
-        <div class="product-card__info">
-
-          <div>
-
-            <div class="product-card__name">
-              Wide-Leg Linen Trouser
-            </div>
-
-            <div class="product-card__meta">
-              Sand / Relaxed fit
-            </div>
-
-          </div>
-
-
-          <div class="product-card__price">
-            $165.00
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- PRODUCT 4 -->
-
-      <div class="product-card reveal">
-
-        <div class="product-card__visual">
-
-          <img
-            src="https://images.unsplash.com/photo-1542272617-08f086302542?auto=format&fit=crop&w=700&q=80"
-            alt="Relaxed Drawstring Pant"
-          >
-
-          <button class="product-card__quick">
-            Quick Add
-          </button>
-
-        </div>
-
-
-        <div class="product-card__info">
-
-          <div>
-
-            <div class="product-card__name">
-              Relaxed Drawstring Pant
-            </div>
-
-            <div class="product-card__meta">
-              Stone / Elastic waist
-            </div>
-
-          </div>
-
-
-          <div class="product-card__price">
-            $130.00
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ==========================================
-       FOOTER
-  ========================================== -->
-
-  <footer
-    class="footer"
-    id="footer"
-  >
-
-    <div class="footer__inner">
-
-      <div class="footer__logo">
-        TERRA
-      </div>
-
-
-      <ul class="footer__links">
-
-        <li>
-          <a href="#">
-            Shipping
-          </a>
-        </li>
-
-        <li>
-          <a href="#">
-            Returns
-          </a>
-        </li>
-
-        <li>
-          <a href="#">
-            Care
-          </a>
-        </li>
-
-        <li>
-          <a href="#">
-            Contact
-          </a>
-        </li>
-
-        <li>
-          <a href="#">
-            Instagram
-          </a>
-        </li>
-
-      </ul>
-
-
-      <div class="footer__copy">
-        &copy; 2026 Terra. All rights reserved.
-      </div>
-
-    </div>
-
-  </footer>
-
-
-  <!-- ==========================================
-       JAVASCRIPT
-  ========================================== -->
-
-  <script>
-
-    /* ===== NAVBAR ===== */
-
-    const navbar =
-      document.getElementById('navbar');
-
-
-    window.addEventListener('scroll', () => {
-
-      if (window.scrollY > 60) {
-
-        navbar.classList.add('scrolled');
-
-      } else {
-
-        navbar.classList.remove('scrolled');
-
-      }
-
-    });
-
-
-    /* ===== MOBILE MENU ===== */
-
-    function toggleMenu() {
-
-      const mobileNav =
-        document.getElementById('mobileNav');
-
-
-      mobileNav.classList.toggle('open');
-
-
-      document.body.style.overflow =
-        mobileNav.classList.contains('open')
-          ? 'hidden'
-          : '';
-
-    }
-
-
-    /* ===== HERO SLIDER ===== */
-
-    let currentSlide = 0;
-
-    const totalSlides = 3;
-
-    const track =
-      document.getElementById('sliderTrack');
-
-    const dots =
-      document.querySelectorAll('.slider-dot');
-
-    let autoSlideInterval;
-
-
-    function updateSlider() {
-
-      track.style.transform =
-        `translateX(-${currentSlide * 100}%)`;
-
-
-      dots.forEach((dot, i) => {
-
-        dot.classList.toggle(
-          'active',
-          i === currentSlide
-        );
-
-      });
-
-    }
-
-
-    function nextSlide() {
-
-      currentSlide =
-        (currentSlide + 1) % totalSlides;
-
-      updateSlider();
-
-      resetAutoSlide();
-
-    }
-
-
-    function prevSlide() {
-
-      currentSlide =
-        (currentSlide - 1 + totalSlides)
-        % totalSlides;
-
-      updateSlider();
-
-      resetAutoSlide();
-
-    }
-
-
-    function goToSlide(index) {
-
-      currentSlide = index;
-
-      updateSlider();
-
-      resetAutoSlide();
-
-    }
-
-
-    function resetAutoSlide() {
-
-      clearInterval(autoSlideInterval);
-
-      autoSlideInterval =
-        setInterval(
-          nextSlide,
-          5000
-        );
-
-    }
-
-
-    /* ===== TOUCH SWIPE ===== */
-
-    let touchStartX = 0;
-
-    let touchEndX = 0;
-
-
-    track.addEventListener(
-      'touchstart',
-      e => {
-
-        touchStartX =
-          e.changedTouches[0].screenX;
-
-      },
-      {
-        passive: true
-      }
-    );
-
-
-    track.addEventListener(
-      'touchend',
-      e => {
-
-        touchEndX =
-          e.changedTouches[0].screenX;
-
-        handleSwipe();
-
-      },
-      {
-        passive: true
-      }
-    );
-
-
-    function handleSwipe() {
-
-      const diff =
-        touchStartX - touchEndX;
-
-
-      if (Math.abs(diff) > 50) {
-
-        if (diff > 0) {
-
-          nextSlide();
-
-        } else {
-
-          prevSlide();
-
-        }
-
-      }
-
-    }
-
-
-    /* ===== START AUTO SLIDE ===== */
-
-    resetAutoSlide();
-
-
-    /* ===== SCROLL REVEAL ===== */
-
-    const reveals =
-      document.querySelectorAll('.reveal');
-
-
-    const revealOnScroll = () => {
-
-      reveals.forEach(el => {
-
-        if (
-          el.getBoundingClientRect().top
-          <
-          window.innerHeight - 60
-        ) {
-
-          el.classList.add('visible');
-
-        }
-
-      });
-
-    };
-
-
-    window.addEventListener(
-      'scroll',
-      revealOnScroll
-    );
-
-
-    revealOnScroll();
-
-  </script>
+<ul class="nav__links">
+<li><a href="index.html">Home</a></li>
+<li><a href="#bestsellers">Bestsellers</a></li>
+<li><a href="shop.html">Shop</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+
+<a href="#" style="color:white">🛍</a>
+
+</div>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-track" id="heroTrack">
+
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1600&q=80">
+
+<div class="slide-content">
+<span class="badge">Bestseller</span>
+<h1 class="font-serif">Organic Cotton <em>Tee</em></h1>
+<p class="price">$85.00 — Undyed / 240gsm</p>
+<a href="shop.html" class="btn">Shop Now →</a>
+</div>
+</div>
+
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=1600&q=80">
+
+<div class="slide-content">
+<span class="badge">New Drop</span>
+<h1 class="font-serif">Wide-Leg <em>Trouser</em></h1>
+<p class="price">$165.00 — Sand / Relaxed Fit</p>
+<a href="shop.html" class="btn">Shop Now →</a>
+</div>
+</div>
+
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=1600&q=80">
+
+<div class="slide-content">
+<span class="badge">Most Loved</span>
+<h1 class="font-serif">Heavyweight <em>Box Tee</em></h1>
+<p class="price">$95.00 — Washed Black / 300gsm</p>
+<a href="shop.html" class="btn">Shop Now →</a>
+</div>
+</div>
+
+</div>
+
+<div class="arrows">
+<button class="arrow" onclick="prevSlide()">‹</button>
+<button class="arrow" onclick="nextSlide()">›</button>
+</div>
+
+<div class="dots">
+<button class="dot active" onclick="goSlide(0)"></button>
+<button class="dot" onclick="goSlide(1)"></button>
+<button class="dot" onclick="goSlide(2)"></button>
+</div>
+
+</section>
+
+<!-- MARQUEE -->
+
+<div class="marquee">
+<div class="marquee-track">
+
+<span><i></i> Organic Cotton</span>
+<span><i></i> Small Batch</span>
+<span><i></i> Undyed Fibres</span>
+<span><i></i> Made in Portugal</span>
+<span><i></i> Free Shipping Over $150</span>
+
+<span><i></i> Organic Cotton</span>
+<span><i></i> Small Batch</span>
+<span><i></i> Undyed Fibres</span>
+<span><i></i> Made in Portugal</span>
+<span><i></i> Free Shipping Over $150</span>
+
+</div>
+</div>
+
+<!-- BESTSELLERS -->
+
+<section class="section" id="bestsellers">
+
+<div class="section-head">
+<span class="section-label">Curated</span>
+<h2 class="section-title font-serif">
+This Week's <em>Favourites</em>
+</h2>
+</div>
+
+<div class="product-grid">
+
+<div class="card">
+<div class="card-image">
+<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=80">
+<span class="card-badge">Bestseller</span>
+</div>
+<div class="card-info">
+<div>
+<div class="card-name">Organic Cotton Tee</div>
+<div class="card-meta">Undyed / 240gsm</div>
+</div>
+<div class="card-price">$85.00</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-image">
+<img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=700&q=80">
+<span class="card-badge">Top Rated</span>
+</div>
+<div class="card-info">
+<div>
+<div class="card-name">Heavyweight Box Tee</div>
+<div class="card-meta">Washed Black / 300gsm</div>
+</div>
+<div class="card-price">$95.00</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-image">
+<img src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=700&q=80">
+<span class="card-badge">New</span>
+</div>
+<div class="card-info">
+<div>
+<div class="card-name">Wide-Leg Linen Trouser</div>
+<div class="card-meta">Sand / Relaxed Fit</div>
+</div>
+<div class="card-price">$165.00</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-image">
+<img src="https://images.unsplash.com/photo-1542272617-08f086302542?auto=format&fit=crop&w=700&q=80">
+</div>
+<div class="card-info">
+<div>
+<div class="card-name">Relaxed Drawstring Pant</div>
+<div class="card-meta">Stone / Elastic Waist</div>
+</div>
+<div class="card-price">$130.00</div>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- NEW CLOTHING SECTION -->
+
+<section class="section" id="featured">
+
+<div class="section-head">
+<span class="section-label">New Collection</span>
+
+<h2 class="section-title font-serif">
+More <em>Essentials</em>
+</h2>
+</div>
+
+<div class="product-grid">
+
+<!-- ADD YOUR CLOTHES HERE -->
+
+<div class="card">
+<div class="card-image">
+<img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=700&q=80">
+<span class="card-badge">New</span>
+</div>
+<div class="card-info">
+<div>
+<div class="card-name">Essential Overshirt</div>
+<div class="card-meta">Natural / Cotton</div>
+</div>
+<div class="card-price">$120.00</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-image">
+<img src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=700&q=80">
+</div>
+<div class="card-info">
+<div>
+<div class="card-name">Relaxed Shirt</div>
+<div class="card-meta">Cream / Linen</div>
+</div>
+<div class="card-price">$110.00</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-image">
+<img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=700&q=80">
+</div>
+<div class="card-info">
+<div>
+<div class="card-name">Everyday Jacket</div>
+<div class="card-meta">Stone / Organic Cotton</div>
+</div>
+<div class="card-price">$180.00</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-image">
+<img src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=700&q=80">
+</div>
+<div class="card-info">
+<div>
+<div class="card-name">Relaxed Button Shirt</div>
+<div class="card-meta">Washed White</div>
+</div>
+<div class="card-price">$115.00</div>
+</div>
+</div>
+
+</div>
+
+<div class="view-shop">
+<a href="shop.html">View Full Collection →</a>
+</div>
+
+</section>
+
+<!-- HOME CONTACT -->
+
+<section class="contact-home">
+
+<div class="contact-inner">
+
+<span class="section-label">Get In Touch</span>
+
+<h2 class="font-serif">Let's <em>Connect</em></h2>
+
+<p>
+Have a question about an order, our collections, sizing,
+or anything else? Our team would love to hear from you.
+</p>
+
+<div class="contact-details">
+
+<div class="contact-detail">
+<span>Email</span>
+<a href="mailto:hello@terra.com">hello@terra.com</a>
+</div>
+
+<div class="contact-detail">
+<span>Phone</span>
+<a href="tel:+00000000000">+00 000 000 000</a>
+</div>
+
+<div class="contact-detail">
+<span>Instagram</span>
+<a href="#">@terra</a>
+</div>
+
+<div class="contact-detail">
+<span>Location</span>
+<a href="#">Your City, Country</a>
+</div>
+
+</div>
+
+<br><br>
+
+<a href="contact.html" class="view-shop">
+<span style="display:inline-block;border:1px solid var(--text);padding:1rem 2.5rem;border-radius:100px;font-size:11px;text-transform:uppercase;letter-spacing:.15em;">
+Contact Us →
+</span>
+</a>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+<div class="footer-inner">
+
+<div class="footer-logo">TERRA</div>
+
+<ul class="footer-links">
+<li><a href="#">Shipping</a></li>
+<li><a href="#">Returns</a></li>
+<li><a href="#">Care</a></li>
+<li><a href="contact.html">Contact</a></li>
+<li><a href="#">Instagram</a></li>
+</ul>
+
+<div class="footer-copy">
+© 2026 Terra. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+<script>
+
+const navbar=document.getElementById("navbar");
+
+window.addEventListener("scroll",()=>{
+if(window.scrollY>60){
+navbar.classList.add("scrolled");
+}else{
+navbar.classList.remove("scrolled");
+}
+});
+
+function toggleMenu(){
+document.getElementById("mobileNav").classList.toggle("open");
+}
+
+let currentSlide=0;
+
+const track=document.getElementById("heroTrack");
+const dots=document.querySelectorAll(".dot");
+
+function updateSlider(){
+
+track.style.transform=`translateX(-${currentSlide*100}%)`;
+
+dots.forEach((dot,index)=>{
+dot.classList.toggle("active",index===currentSlide);
+});
+
+}
+
+function nextSlide(){
+
+currentSlide=(currentSlide+1)%3;
+updateSlider();
+
+}
+
+function prevSlide(){
+
+currentSlide=(currentSlide-1+3)%3;
+updateSlider();
+
+}
+
+function goSlide(index){
+
+currentSlide=index;
+updateSlider();
+
+}
+
+setInterval(nextSlide,5000);
+
+</script>
 
 </body>
 </html>
-```
