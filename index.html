@@ -1,8 +1,9 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
   <title>TERRA — Organic Clothing</title>
 
@@ -11,34 +12,1199 @@
     content="Undyed cotton, washed linen and baggy pants. Cut in small runs, finished by hand."
   >
 
-  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    :root {
+      --bg: #F3EFE6;
+      --bg-warm: #EDE6D6;
+      --bg-dark: #1A1814;
+      --text: #2C2820;
+      --text-light: #8A8070;
+      --accent: #B8956A;
+      --border: rgba(44,40,32,0.1);
+
+      --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-slow: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+
+      overflow-x: hidden;
+    }
+
+
+    ::selection {
+      background: var(--accent);
+      color: #fff;
+    }
+
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+
+    .font-serif {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-weight: 400;
+      line-height: 1.05;
+    }
+
+
+    /* ==========================================
+       NAVIGATION
+    ========================================== */
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+
+      z-index: 1000;
+
+      padding: 1.75rem 3rem;
+
+      transition: all 0.5s var(--ease-slow);
+
+      mix-blend-mode: difference;
+    }
+
+
+    .nav.scrolled {
+      background: rgba(243, 239, 230, 0.95);
+
+      backdrop-filter: blur(20px) saturate(1.2);
+      -webkit-backdrop-filter: blur(20px) saturate(1.2);
+
+      mix-blend-mode: normal;
+
+      border-bottom: 1px solid var(--border);
+
+      padding: 1.1rem 3rem;
+    }
+
+
+    .nav__inner {
+      display: flex;
+
+      align-items: center;
+      justify-content: space-between;
+
+      max-width: 1600px;
+
+      margin: 0 auto;
+    }
+
+
+    .nav__logo {
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: 1.6rem;
+
+      font-weight: 500;
+
+      letter-spacing: 0.1em;
+
+      text-transform: uppercase;
+
+      color: #fff;
+
+      cursor: pointer;
+    }
+
+
+    .nav.scrolled .nav__logo {
+      color: var(--text);
+    }
+
+
+    .nav__links {
+      display: flex;
+
+      gap: 2.5rem;
+
+      list-style: none;
+    }
+
+
+    .nav__links a {
+      font-size: 12px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.14em;
+
+      color: #fff;
+
+      position: relative;
+
+      padding-bottom: 3px;
+
+      cursor: pointer;
+    }
+
+
+    .nav.scrolled .nav__links a {
+      color: var(--text);
+    }
+
+
+    .nav__links a::after {
+      content: '';
+
+      position: absolute;
+
+      bottom: 0;
+      left: 0;
+
+      width: 0%;
+
+      height: 1px;
+
+      background: currentColor;
+
+      transition: width 0.5s var(--ease-out);
+    }
+
+
+    .nav__links a:hover::after {
+      width: 100%;
+    }
+
+
+    .nav__icon {
+      background: none;
+
+      border: none;
+
+      cursor: pointer;
+
+      padding: 0.5rem;
+
+      color: #fff;
+    }
+
+
+    .nav.scrolled .nav__icon {
+      color: var(--text);
+    }
+
+
+    .mobile-menu-btn {
+      display: none;
+
+      background: none;
+
+      border: none;
+
+      cursor: pointer;
+
+      color: #fff;
+
+      padding: 0.5rem;
+    }
+
+
+    .nav.scrolled .mobile-menu-btn {
+      color: var(--text);
+    }
+
+
+    /* ==========================================
+       MOBILE MENU
+    ========================================== */
+
+    .mobile-nav {
+      position: fixed;
+
+      inset: 0;
+
+      background: var(--bg);
+
+      z-index: 999;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 2.5rem;
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: opacity 0.5s var(--ease-slow);
+    }
+
+
+    .mobile-nav.open {
+      opacity: 1;
+
+      pointer-events: all;
+    }
+
+
+    .mobile-nav a {
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: 2.5rem;
+
+      color: var(--text);
+
+      opacity: 0;
+
+      transform: translateY(20px);
+
+      transition: all 0.6s var(--ease-slow);
+
+      cursor: pointer;
+    }
+
+
+    .mobile-nav.open a {
+      opacity: 1;
+
+      transform: translateY(0);
+    }
+
+
+    .mobile-nav.open a:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+
+
+    .mobile-nav.open a:nth-child(2) {
+      transition-delay: 0.2s;
+    }
+
+
+    .mobile-nav.open a:nth-child(3) {
+      transition-delay: 0.3s;
+    }
+
+
+    .mobile-nav.open a:nth-child(4) {
+      transition-delay: 0.4s;
+    }
+
+
+    .mobile-nav__close {
+      position: absolute;
+
+      top: 1.5rem;
+      right: 1.5rem;
+
+      background: none;
+
+      border: none;
+
+      cursor: pointer;
+
+      color: var(--text);
+
+      padding: 0.5rem;
+    }
+
+
+    /* ==========================================
+       HERO SLIDER
+    ========================================== */
+
+    .hero-slider {
+      position: relative;
+
+      height: 100vh;
+
+      min-height: 700px;
+
+      width: 100%;
+
+      overflow: hidden;
+    }
+
+
+    .hero-slider__track {
+      display: flex;
+
+      height: 100%;
+
+      transition: transform 0.8s var(--ease-slow);
+    }
+
+
+    .hero-slide {
+      position: relative;
+
+      min-width: 100%;
+
+      height: 100%;
+
+      display: flex;
+
+      align-items: flex-end;
+
+      justify-content: center;
+    }
+
+
+    .hero-slide__media {
+      position: absolute;
+
+      inset: 0;
+
+      z-index: 0;
+    }
+
+
+    .hero-slide__media img {
+      width: 100%;
+
+      height: 100%;
+
+      object-fit: cover;
+    }
+
+
+    .hero-slide__overlay {
+      position: absolute;
+
+      inset: 0;
+
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,0.2) 0%,
+          rgba(0,0,0,0.5) 60%,
+          rgba(0,0,0,0.75) 100%
+        );
+
+      z-index: 1;
+    }
+
+
+    .hero-slide__content {
+      position: relative;
+
+      z-index: 2;
+
+      text-align: center;
+
+      color: #fff;
+
+      padding: 5rem 2rem 7rem;
+
+      max-width: 700px;
+    }
+
+
+    .hero-slide__badge {
+      display: inline-block;
+
+      font-size: 11px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.2em;
+
+      border: 1px solid rgba(255,255,255,0.4);
+
+      padding: 0.5rem 1.2rem;
+
+      border-radius: 100px;
+
+      margin-bottom: 1.5rem;
+    }
+
+
+    .hero-slide__title {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+
+      margin-bottom: 1rem;
+
+      letter-spacing: -0.01em;
+    }
+
+
+    .hero-slide__title em {
+      font-style: italic;
+
+      font-weight: 400;
+    }
+
+
+    .hero-slide__price {
+      font-size: 18px;
+
+      opacity: 0.8;
+
+      margin-bottom: 2rem;
+
+      font-weight: 300;
+    }
+
+
+    .hero-slide__cta {
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 0.75rem;
+
+      background: #fff;
+
+      color: var(--text);
+
+      font-size: 12px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.12em;
+
+      padding: 1rem 2.5rem;
+
+      border-radius: 100px;
+
+      transition: all 0.4s var(--ease-out);
+
+      border: none;
+
+      cursor: pointer;
+
+      font-family: 'Inter', sans-serif;
+    }
+
+
+    .hero-slide__cta:hover {
+      background: var(--accent);
+
+      color: #fff;
+
+      gap: 1rem;
+    }
+
+
+    .slider-dots {
+      position: absolute;
+
+      bottom: 2.5rem;
+
+      left: 50%;
+
+      transform: translateX(-50%);
+
+      z-index: 10;
+
+      display: flex;
+
+      gap: 0.75rem;
+    }
+
+
+    .slider-dot {
+      width: 10px;
+
+      height: 10px;
+
+      border-radius: 50%;
+
+      background: rgba(255,255,255,0.3);
+
+      border: none;
+
+      cursor: pointer;
+
+      transition: all 0.4s;
+
+      padding: 0;
+    }
+
+
+    .slider-dot.active {
+      background: #fff;
+
+      transform: scale(1.2);
+    }
+
+
+    .slider-arrows {
+      position: absolute;
+
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      width: 100%;
+
+      z-index: 10;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      padding: 0 2rem;
+
+      pointer-events: none;
+    }
+
+
+    .slider-arrow {
+      width: 48px;
+
+      height: 48px;
+
+      border-radius: 50%;
+
+      background: rgba(255,255,255,0.1);
+
+      backdrop-filter: blur(10px);
+
+      border: 1px solid rgba(255,255,255,0.2);
+
+      color: #fff;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      cursor: pointer;
+
+      transition: all 0.3s;
+
+      pointer-events: all;
+    }
+
+
+    .slider-arrow:hover {
+      background: rgba(255,255,255,0.25);
+    }
+
+
+    /* ==========================================
+       MARQUEE
+    ========================================== */
+
+    .marquee {
+      background: var(--bg-warm);
+
+      padding: 1.1rem 0;
+
+      overflow: hidden;
+
+      white-space: nowrap;
+
+      border-top: 1px solid var(--border);
+
+      border-bottom: 1px solid var(--border);
+    }
+
+
+    .marquee__track {
+      display: inline-block;
+
+      animation: marqueeScroll 25s linear infinite;
+    }
+
+
+    .marquee__item {
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 0.5rem;
+
+      font-size: 11px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.18em;
+
+      padding: 0 2.5rem;
+
+      color: var(--text-light);
+    }
+
+
+    .marquee__dot {
+      width: 5px;
+
+      height: 5px;
+
+      background: var(--accent);
+
+      border-radius: 50%;
+
+      display: inline-block;
+    }
+
+
+    @keyframes marqueeScroll {
+
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+
+    }
+
+
+    /* ==========================================
+       BESTSELLERS
+    ========================================== */
+
+    .bestsellers {
+      max-width: 1400px;
+
+      margin: 0 auto;
+
+      padding: 8rem 3rem;
+    }
+
+
+    .bestsellers__head {
+      text-align: center;
+
+      margin-bottom: 4rem;
+    }
+
+
+    .bestsellers__label {
+      font-size: 11px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.2em;
+
+      color: var(--text-light);
+
+      margin-bottom: 1rem;
+
+      display: block;
+    }
+
+
+    .bestsellers__title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+    }
+
+
+    .bestsellers__title em {
+      font-style: italic;
+    }
+
+
+    .product-grid {
+      display: grid;
+
+      grid-template-columns: repeat(4, 1fr);
+
+      gap: 2.5rem 2rem;
+    }
+
+
+    .product-card {
+      cursor: pointer;
+    }
+
+
+    .product-card__visual {
+      position: relative;
+
+      aspect-ratio: 3 / 4;
+
+      overflow: hidden;
+
+      background: var(--bg-warm);
+
+      margin-bottom: 1.25rem;
+    }
+
+
+    .product-card__visual img {
+      width: 100%;
+
+      height: 100%;
+
+      object-fit: cover;
+
+      transition: transform 1.2s var(--ease-slow);
+    }
+
+
+    .product-card:hover .product-card__visual img {
+      transform: scale(1.06);
+    }
+
+
+    .product-card__badge {
+      position: absolute;
+
+      top: 1rem;
+
+      left: 1rem;
+
+      font-size: 10px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.12em;
+
+      background: rgba(255,255,255,0.92);
+
+      color: var(--text);
+
+      padding: 0.4rem 0.9rem;
+
+      border-radius: 100px;
+
+      backdrop-filter: blur(8px);
+
+      font-weight: 500;
+    }
+
+
+    .product-card__quick {
+      position: absolute;
+
+      bottom: 1rem;
+
+      left: 50%;
+
+      transform:
+        translateX(-50%)
+        translateY(10px);
+
+      opacity: 0;
+
+      background: #fff;
+
+      color: var(--text);
+
+      border: none;
+
+      padding: 0.75rem 2rem;
+
+      font-size: 11px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.12em;
+
+      cursor: pointer;
+
+      border-radius: 100px;
+
+      transition: all 0.4s var(--ease-out);
+
+      font-family: 'Inter', sans-serif;
+
+      white-space: nowrap;
+    }
+
+
+    .product-card:hover .product-card__quick {
+      opacity: 1;
+
+      transform:
+        translateX(-50%)
+        translateY(0);
+    }
+
+
+    .product-card__info {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: baseline;
+
+      gap: 1rem;
+    }
+
+
+    .product-card__name {
+      font-size: 14px;
+
+      font-weight: 400;
+
+      color: var(--text);
+
+      letter-spacing: 0.01em;
+
+      line-height: 1.4;
+    }
+
+
+    .product-card__price {
+      font-size: 13px;
+
+      color: var(--text-light);
+
+      font-weight: 400;
+
+      white-space: nowrap;
+    }
+
+
+    .product-card__meta {
+      font-size: 12px;
+
+      color: var(--text-light);
+
+      margin-top: 0.35rem;
+
+      letter-spacing: 0.02em;
+    }
+
+
+    /* ==========================================
+       FOOTER
+    ========================================== */
+
+    .footer {
+      padding: 4rem 3rem;
+
+      border-top: 1px solid var(--border);
+
+      background: var(--bg);
+    }
+
+
+    .footer__inner {
+      max-width: 1600px;
+
+      margin: 0 auto;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      flex-wrap: wrap;
+
+      gap: 2rem;
+    }
+
+
+    .footer__logo {
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: 1.4rem;
+
+      letter-spacing: 0.08em;
+
+      text-transform: uppercase;
+    }
+
+
+    .footer__links {
+      display: flex;
+
+      gap: 2.5rem;
+
+      list-style: none;
+    }
+
+
+    .footer__links a {
+      font-size: 12px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.1em;
+
+      color: var(--text-light);
+
+      transition: color 0.3s;
+    }
+
+
+    .footer__links a:hover {
+      color: var(--text);
+    }
+
+
+    .footer__copy {
+      font-size: 12px;
+
+      color: var(--text-light);
+    }
+
+
+    /* ==========================================
+       SCROLL REVEAL
+    ========================================== */
+
+    .reveal {
+      opacity: 0;
+
+      transform: translateY(30px);
+
+      transition:
+        opacity 0.8s var(--ease-slow),
+        transform 0.8s var(--ease-slow);
+    }
+
+
+    .reveal.visible {
+      opacity: 1;
+
+      transform: translateY(0);
+    }
+
+
+    /* ==========================================
+       MOBILE
+    ========================================== */
+
+    @media (max-width: 1200px) {
+
+      .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+    }
+
+
+    @media (max-width: 1024px) {
+
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 2rem 1.5rem;
+      }
+
+
+      .bestsellers {
+        padding: 6rem 2rem;
+      }
+
+    }
+
+
+    @media (max-width: 768px) {
+
+      .nav {
+        padding: 1.1rem 1.25rem;
+      }
+
+
+      .nav.scrolled {
+        padding: 0.9rem 1.25rem;
+      }
+
+
+      .nav__links {
+        display: none;
+      }
+
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+
+      .hero-slider {
+        min-height: 600px;
+      }
+
+
+      .hero-slide__title {
+        font-size: clamp(2rem, 10vw, 3rem);
+      }
+
+
+      .hero-slide__content {
+        padding: 4rem 1.5rem 6rem;
+      }
+
+
+      .slider-arrows {
+        display: none;
+      }
+
+
+      .bestsellers {
+        padding: 5rem 1.25rem;
+      }
+
+
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 1.25rem 0.875rem;
+      }
+
+
+      .product-card__visual {
+        margin-bottom: 0.875rem;
+      }
+
+
+      .product-card__badge {
+        top: 0.625rem;
+
+        left: 0.625rem;
+
+        font-size: 9px;
+
+        padding: 0.3rem 0.7rem;
+      }
+
+
+      .product-card__quick {
+        display: none;
+      }
+
+
+      .product-card__name {
+        font-size: 13px;
+      }
+
+
+      .product-card__price {
+        font-size: 12px;
+      }
+
+
+      .product-card__meta {
+        font-size: 11px;
+
+        margin-top: 0.2rem;
+      }
+
+
+      .footer {
+        padding: 3rem 1.25rem;
+      }
+
+
+      .footer__inner {
+        flex-direction: column;
+
+        text-align: center;
+
+        gap: 1.5rem;
+      }
+
+
+      .footer__links {
+        gap: 1.25rem;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+      }
+
+    }
+
+
+    @media (max-width: 380px) {
+
+      .product-grid {
+        gap: 1rem 0.625rem;
+      }
+
+    }
+
+  </style>
 </head>
+
 
 <body>
 
-  <!-- =========================
-       MOBILE NAVIGATION
-  ========================== -->
 
-  <div class="mobile-nav" id="mobileNav">
+  <!-- ==========================================
+       MOBILE NAV
+  ========================================== -->
+
+  <div
+    class="mobile-nav"
+    id="mobileNav"
+  >
 
     <button
       class="mobile-nav__close"
       onclick="toggleMenu()"
-      aria-label="Close menu"
+      aria-label="Close"
     >
-      ×
+
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+      >
+
+        <path d="M18 6L6 18M6 6l12 12"/>
+
+      </svg>
+
     </button>
 
-    <a href="index.html">Home</a>
+
+    <a href="index.html">
+      Home
+    </a>
+
 
     <a href="index.html#bestsellers">
       Bestsellers
     </a>
 
+
     <a href="shop.html">
       Shop
     </a>
+
 
     <a href="index.html#footer">
       Contact
@@ -47,21 +1213,39 @@
   </div>
 
 
-  <!-- =========================
+  <!-- ==========================================
        NAVIGATION
-  ========================== -->
+  ========================================== -->
 
-  <nav class="nav" id="navbar">
+  <nav
+    class="nav"
+    id="navbar"
+  >
 
     <div class="nav__inner">
+
 
       <button
         class="mobile-menu-btn"
         onclick="toggleMenu()"
         aria-label="Menu"
       >
-        ☰
+
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+
+          <path d="M3 12h18M3 6h18M3 18h18"/>
+
+        </svg>
+
       </button>
+
 
       <a
         href="index.html"
@@ -69,6 +1253,7 @@
       >
         TERRA
       </a>
+
 
       <ul class="nav__links">
 
@@ -98,12 +1283,35 @@
 
       </ul>
 
+
       <a
         href="#"
         class="nav__icon"
         aria-label="Cart"
       >
-        🛍
+
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+
+          <line
+            x1="3"
+            y1="6"
+            x2="21"
+            y2="6"
+          />
+
+          <path d="M16 10a4 4 0 01-8 0"/>
+
+        </svg>
+
       </a>
 
     </div>
@@ -111,9 +1319,9 @@
   </nav>
 
 
-  <!-- =========================
+  <!-- ==========================================
        HERO SLIDER
-  ========================== -->
+  ========================================== -->
 
   <section
     class="hero-slider"
@@ -124,6 +1332,7 @@
       class="hero-slider__track"
       id="sliderTrack"
     >
+
 
       <!-- SLIDE 1 -->
 
@@ -138,7 +1347,9 @@
 
         </div>
 
+
         <div class="hero-slide__overlay"></div>
+
 
         <div class="hero-slide__content">
 
@@ -146,20 +1357,42 @@
             Bestseller
           </span>
 
+
           <h1 class="hero-slide__title font-serif">
+
             Organic Cotton
             <em>Tee</em>
+
           </h1>
 
+
           <p class="hero-slide__price">
-            $85.00 — Undyed / 240gsm
+            $85.00 &mdash; Undyed / 240gsm
           </p>
+
 
           <a
             class="hero-slide__cta"
             href="shop.html"
           >
-            Shop Now →
+
+            Shop Now
+
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+
+              <path d="M3.333 8h9.334m-4-4 4 4-4 4"/>
+
+            </svg>
+
           </a>
 
         </div>
@@ -180,7 +1413,9 @@
 
         </div>
 
+
         <div class="hero-slide__overlay"></div>
+
 
         <div class="hero-slide__content">
 
@@ -188,20 +1423,42 @@
             New Drop
           </span>
 
+
           <h1 class="hero-slide__title font-serif">
+
             Wide-Leg
             <em>Trouser</em>
+
           </h1>
 
+
           <p class="hero-slide__price">
-            $165.00 — Sand / Relaxed fit
+            $165.00 &mdash; Sand / Relaxed fit
           </p>
+
 
           <a
             class="hero-slide__cta"
             href="shop.html"
           >
-            Shop Now →
+
+            Shop Now
+
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+
+              <path d="M3.333 8h9.334m-4-4 4 4-4 4"/>
+
+            </svg>
+
           </a>
 
         </div>
@@ -222,7 +1479,9 @@
 
         </div>
 
+
         <div class="hero-slide__overlay"></div>
+
 
         <div class="hero-slide__content">
 
@@ -230,20 +1489,42 @@
             Most Loved
           </span>
 
+
           <h1 class="hero-slide__title font-serif">
+
             Heavyweight
             <em>Box Tee</em>
+
           </h1>
 
+
           <p class="hero-slide__price">
-            $95.00 — Washed Black / 300gsm
+            $95.00 &mdash; Washed Black / 300gsm
           </p>
+
 
           <a
             class="hero-slide__cta"
             href="shop.html"
           >
-            Shop Now →
+
+            Shop Now
+
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+
+              <path d="M3.333 8h9.334m-4-4 4 4-4 4"/>
+
+            </svg>
+
           </a>
 
         </div>
@@ -253,30 +1534,61 @@
     </div>
 
 
-    <!-- SLIDER ARROWS -->
+    <!-- ARROWS -->
 
     <div class="slider-arrows">
 
       <button
         class="slider-arrow"
         onclick="prevSlide()"
-        aria-label="Previous slide"
+        aria-label="Previous"
       >
-        ‹
+
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+
+          <path d="M15 18l-6-6 6-6"/>
+
+        </svg>
+
       </button>
+
 
       <button
         class="slider-arrow"
         onclick="nextSlide()"
-        aria-label="Next slide"
+        aria-label="Next"
       >
-        ›
+
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+
+          <path d="M9 18l6-6-6-6"/>
+
+        </svg>
+
       </button>
 
     </div>
 
 
-    <!-- SLIDER DOTS -->
+    <!-- DOTS -->
 
     <div class="slider-dots">
 
@@ -286,11 +1598,13 @@
         aria-label="Slide 1"
       ></button>
 
+
       <button
         class="slider-dot"
         onclick="goToSlide(1)"
         aria-label="Slide 2"
       ></button>
+
 
       <button
         class="slider-dot"
@@ -303,9 +1617,9 @@
   </section>
 
 
-  <!-- =========================
+  <!-- ==========================================
        MARQUEE
-  ========================== -->
+  ========================================== -->
 
   <div class="marquee">
 
@@ -367,11 +1681,11 @@
   </div>
 
 
-  <!-- =========================
+  <!-- ==========================================
        BESTSELLERS
-       NO T-SHIRTS CATEGORY
-       NO BAGGY PANTS CATEGORY
-  ========================== -->
+       T-SHIRTS AND BAGGY PANTS
+       REMOVED FROM HOME
+  ========================================== -->
 
   <section
     class="bestsellers"
@@ -384,9 +1698,12 @@
         Curated
       </span>
 
+
       <h2 class="bestsellers__title font-serif">
-        This Week's
+
+        This Week&rsquo;s
         <em>Favourites</em>
+
       </h2>
 
     </div>
@@ -407,7 +1724,7 @@
           >
 
           <span class="product-card__badge">
-            New
+            Bestseller
           </span>
 
           <button class="product-card__quick">
@@ -415,6 +1732,7 @@
           </button>
 
         </div>
+
 
         <div class="product-card__info">
 
@@ -429,6 +1747,7 @@
             </div>
 
           </div>
+
 
           <div class="product-card__price">
             $85.00
@@ -451,7 +1770,7 @@
           >
 
           <span class="product-card__badge">
-            Bestseller
+            Top Rated
           </span>
 
           <button class="product-card__quick">
@@ -459,6 +1778,7 @@
           </button>
 
         </div>
+
 
         <div class="product-card__info">
 
@@ -473,6 +1793,7 @@
             </div>
 
           </div>
+
 
           <div class="product-card__price">
             $95.00
@@ -490,12 +1811,12 @@
         <div class="product-card__visual">
 
           <img
-            src="https://images.unsplash.com/photo-1542272617-08f086302542?auto=format&fit=crop&w=700&q=80"
-            alt="Relaxed Drawstring Pant"
+            src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=700&q=80"
+            alt="Wide-Leg Linen Trouser"
           >
 
           <span class="product-card__badge">
-            Bestseller
+            New
           </span>
 
           <button class="product-card__quick">
@@ -503,6 +1824,49 @@
           </button>
 
         </div>
+
+
+        <div class="product-card__info">
+
+          <div>
+
+            <div class="product-card__name">
+              Wide-Leg Linen Trouser
+            </div>
+
+            <div class="product-card__meta">
+              Sand / Relaxed fit
+            </div>
+
+          </div>
+
+
+          <div class="product-card__price">
+            $165.00
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- PRODUCT 4 -->
+
+      <div class="product-card reveal">
+
+        <div class="product-card__visual">
+
+          <img
+            src="https://images.unsplash.com/photo-1542272617-08f086302542?auto=format&fit=crop&w=700&q=80"
+            alt="Relaxed Drawstring Pant"
+          >
+
+          <button class="product-card__quick">
+            Quick Add
+          </button>
+
+        </div>
+
 
         <div class="product-card__info">
 
@@ -518,48 +1882,9 @@
 
           </div>
 
+
           <div class="product-card__price">
             $130.00
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- PRODUCT 4 -->
-
-      <div class="product-card reveal">
-
-        <div class="product-card__visual">
-
-          <img
-            src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=700&q=80"
-            alt="Baggy Denim Jean"
-          >
-
-          <button class="product-card__quick">
-            Quick Add
-          </button>
-
-        </div>
-
-        <div class="product-card__info">
-
-          <div>
-
-            <div class="product-card__name">
-              Baggy Denim Jean
-            </div>
-
-            <div class="product-card__meta">
-              Raw Indigo / Wide leg
-            </div>
-
-          </div>
-
-          <div class="product-card__price">
-            $155.00
           </div>
 
         </div>
@@ -571,9 +1896,9 @@
   </section>
 
 
-  <!-- =========================
+  <!-- ==========================================
        FOOTER
-  ========================== -->
+  ========================================== -->
 
   <footer
     class="footer"
@@ -585,6 +1910,7 @@
       <div class="footer__logo">
         TERRA
       </div>
+
 
       <ul class="footer__links">
 
@@ -620,8 +1946,9 @@
 
       </ul>
 
+
       <div class="footer__copy">
-        © 2026 Terra. All rights reserved.
+        &copy; 2026 Terra. All rights reserved.
       </div>
 
     </div>
@@ -629,9 +1956,234 @@
   </footer>
 
 
-  <!-- JAVASCRIPT -->
+  <!-- ==========================================
+       JAVASCRIPT
+  ========================================== -->
 
-  <script src="script.js"></script>
+  <script>
+
+    /* ===== NAVBAR ===== */
+
+    const navbar =
+      document.getElementById('navbar');
+
+
+    window.addEventListener('scroll', () => {
+
+      if (window.scrollY > 60) {
+
+        navbar.classList.add('scrolled');
+
+      } else {
+
+        navbar.classList.remove('scrolled');
+
+      }
+
+    });
+
+
+    /* ===== MOBILE MENU ===== */
+
+    function toggleMenu() {
+
+      const mobileNav =
+        document.getElementById('mobileNav');
+
+
+      mobileNav.classList.toggle('open');
+
+
+      document.body.style.overflow =
+        mobileNav.classList.contains('open')
+          ? 'hidden'
+          : '';
+
+    }
+
+
+    /* ===== HERO SLIDER ===== */
+
+    let currentSlide = 0;
+
+    const totalSlides = 3;
+
+    const track =
+      document.getElementById('sliderTrack');
+
+    const dots =
+      document.querySelectorAll('.slider-dot');
+
+    let autoSlideInterval;
+
+
+    function updateSlider() {
+
+      track.style.transform =
+        `translateX(-${currentSlide * 100}%)`;
+
+
+      dots.forEach((dot, i) => {
+
+        dot.classList.toggle(
+          'active',
+          i === currentSlide
+        );
+
+      });
+
+    }
+
+
+    function nextSlide() {
+
+      currentSlide =
+        (currentSlide + 1) % totalSlides;
+
+      updateSlider();
+
+      resetAutoSlide();
+
+    }
+
+
+    function prevSlide() {
+
+      currentSlide =
+        (currentSlide - 1 + totalSlides)
+        % totalSlides;
+
+      updateSlider();
+
+      resetAutoSlide();
+
+    }
+
+
+    function goToSlide(index) {
+
+      currentSlide = index;
+
+      updateSlider();
+
+      resetAutoSlide();
+
+    }
+
+
+    function resetAutoSlide() {
+
+      clearInterval(autoSlideInterval);
+
+      autoSlideInterval =
+        setInterval(
+          nextSlide,
+          5000
+        );
+
+    }
+
+
+    /* ===== TOUCH SWIPE ===== */
+
+    let touchStartX = 0;
+
+    let touchEndX = 0;
+
+
+    track.addEventListener(
+      'touchstart',
+      e => {
+
+        touchStartX =
+          e.changedTouches[0].screenX;
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+    track.addEventListener(
+      'touchend',
+      e => {
+
+        touchEndX =
+          e.changedTouches[0].screenX;
+
+        handleSwipe();
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+    function handleSwipe() {
+
+      const diff =
+        touchStartX - touchEndX;
+
+
+      if (Math.abs(diff) > 50) {
+
+        if (diff > 0) {
+
+          nextSlide();
+
+        } else {
+
+          prevSlide();
+
+        }
+
+      }
+
+    }
+
+
+    /* ===== START AUTO SLIDE ===== */
+
+    resetAutoSlide();
+
+
+    /* ===== SCROLL REVEAL ===== */
+
+    const reveals =
+      document.querySelectorAll('.reveal');
+
+
+    const revealOnScroll = () => {
+
+      reveals.forEach(el => {
+
+        if (
+          el.getBoundingClientRect().top
+          <
+          window.innerHeight - 60
+        ) {
+
+          el.classList.add('visible');
+
+        }
+
+      });
+
+    };
+
+
+    window.addEventListener(
+      'scroll',
+      revealOnScroll
+    );
+
+
+    revealOnScroll();
+
+  </script>
 
 </body>
 </html>
+```
